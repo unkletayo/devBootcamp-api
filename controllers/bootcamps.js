@@ -1,5 +1,4 @@
 const ErrorResponse = require('../utils/errorResponse');
-// const asyncHandler = require('../middleware/async');
 const asyncHandler = require('../middleware/async');
 const Bootcamp = require('../models/Bootcamp');
 
@@ -29,7 +28,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
     );
   }
 
-  res.status(200).json({ success: true, data: bootcamp });
+  res.status(200).json({ success: true, data: singleBootcamp });
 });
 
 // @desc Create new bootcamp
@@ -54,8 +53,11 @@ exports.updateBootCamp = asyncHandler(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
+
   if (!bootcamp) {
-    return next(new ErrorResponse(`Bootcamp with id of ${req.params.id}`, 404));
+    return next(
+      new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
+    );
   }
   res.status(200).json({
     success: true,
@@ -71,9 +73,9 @@ exports.deleteBootCamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
 
   if (!bootcamp) {
-    return res.status(400).json({
-      success: false,
-    });
+    return next(
+      new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`)
+    );
   }
 
   res.status(200).json({
