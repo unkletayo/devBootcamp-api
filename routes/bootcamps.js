@@ -32,7 +32,7 @@ router.route('/:id/photo').put(protect, authorize('publisher', 'admin'),bootcamp
 router
   .route('/:id')
   .get(getBootcamp)
-  .put(protect, authorize('publisher', 'admin'),updateBootCamp)
+  .put(protect, authorize('publisher', 'admin'), updateBootCamp)
   .delete(protect, authorize('publisher', 'admin'),deleteBootCamp);
 
 module.exports = router;
