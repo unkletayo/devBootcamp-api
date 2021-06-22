@@ -71,7 +71,7 @@ CourseSchema.post('save', function () {
 });
 
 // call getAverage middleware before delete
-CourseSchema.post('pre', function () {
+CourseSchema.post('remove', function () {
   this.constructor.getAverageCost(this.bootcamp);
 });
 
